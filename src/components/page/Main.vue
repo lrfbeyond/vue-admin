@@ -10,7 +10,7 @@
           </div>
           <div class="text item">
             <template v-for="item in optLog">
-            <p><span>{{item.create_time}}</span>{{item.content}}</p>
+            <p><span>{{item.created_at}}</span>{{item.event}}</p>
             </template>
           </div>
         </el-card>
@@ -18,7 +18,7 @@
       <el-col :span="12">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>资讯概览</span>
+            <span>文章概览</span>
           </div>
           <div class="text item">
             <div id="chartPie" style="width:100%; height:240px;"></div>
@@ -28,7 +28,7 @@
       <el-col :span="24">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>资讯统计</span>
+            <span>文章统计</span>
           </div>
           <div class="text item">
             <div id="chartBar" style="width:100%; height:240px;"></div>
@@ -50,7 +50,7 @@ const pieOption = {
   },
   series : [
       {
-          name: '资讯统计',
+          name: '文章统计',
           type: 'pie',
           radius : '55%',
           center: ['50%', '50%'],
@@ -67,7 +67,7 @@ const barOption = {
       }
   },
   legend: {
-      data:['业内资讯','公司动态']
+      data:[]
   },
   grid: {
       left: '3%',
@@ -75,7 +75,7 @@ const barOption = {
       bottom: '3%',
       containLabel: true
   },
-  color: ['#d48265', '#91c7ae'],
+  //color: ['#d48265', '#91c7ae'],
   xAxis : [
       {
           type : 'category',
@@ -90,13 +90,31 @@ const barOption = {
   series : [
       
       {
-          name:'业内资讯',
+          name:'Javascript前端',
           type:'bar',
           stack: '广告',
           data:[]
       },
       {
-          name:'公司动态',
+          name:'PHP后端',
+          type:'bar',
+          stack: '广告',
+          data:[]
+      },
+      {
+          name:'运维知识',
+          type:'bar',
+          stack: '广告',
+          data:[]
+      },
+      {
+          name:'业内关注',
+          type:'bar',
+          stack: '广告',
+          data:[]
+      },
+      {
+          name:'收录导航',
           type:'bar',
           stack: '广告',
           data:[]
@@ -107,7 +125,7 @@ const barOption = {
 export default {
   data () {
     return {
-      url: '/admin/index',
+      url: '/api/home',
       optLog: [],
       chartPie: null,
       chartBar: null
@@ -145,7 +163,7 @@ export default {
       this.chartPie = echarts.init(document.getElementById('chartPie'));
       this.chartPie.setOption(pieOption);
 
-      this.$axios.get('/admin/index/getPieData'
+      this.$axios.get(this.url + '/getPieData'
       ).then((res) => {
         this.chartPie.hideLoading();
         this.chartPie.setOption({
@@ -161,10 +179,22 @@ export default {
     drawBarChart () {
       this.chartBar = echarts.init(document.getElementById('chartBar'));
       this.chartBar.setOption(barOption);
-      this.$axios.get('/admin/index/getBarData'
+      this.$axios.get(this.url + '/getBarData'
       ).then((res) => {
+        let cate = res.data.cate;
+        let data = res.data.data;
+        let cates = new Array(),
+            datas = new Array();
+        for (var i = 0; i < cate.length; i++) {
+          cates[i] = cate[i].title;
+          datas[i] = data[i]
+        }
+
         this.chartBar.hideLoading();
         this.chartBar.setOption({
+          legend: {
+              data: cates
+          },
           xAxis: [{
             data: res.data.date
           }],
@@ -172,6 +202,12 @@ export default {
             data: res.data.data[0]
           },{
             data: res.data.data[1]
+          },{
+            data: res.data.data[2]
+          },{
+            data: res.data.data[3]
+          },{
+            data: res.data.data[4]
           }]
         });
       }).catch((error) => {
