@@ -57,15 +57,15 @@ export default {
         },
         {
           icon: 'icon-wodedingdan',
-          index: '/comments',
+          index: '/comment',
           title: '评论',
           subs: [
             {
-              index: '/comments',
+              index: '/comment',
               title: '评论列表',
             },
             {
-              index: '/comments/reply',
+              index: '/comment/reply',
               title: '最新回复'
             }
           ]

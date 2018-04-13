@@ -43,39 +43,26 @@ export default new Router({
           component: resolve => require(['@/components/page/ArticleAdd'], resolve)
         },
         {
-          path: '/product',
-          component: resolve => require(['@/components/page/Product'], resolve)
+          path: '/catelog',
+          component: resolve => require(['@/components/page/Catelog'], resolve)
         },
         {
-          name: 'productAdd',
-          path: '/product/add',
-          component: resolve => require(['@/components/page/ProductAdd'], resolve)
+          name: 'comment',
+          path: '/comment',
+          component: resolve => require(['@/components/page/Comment'], resolve)
         },
         {
-          path: '/product/:id',
-          component: resolve => require(['@/components/page/ProductAdd'], resolve)
+          path: '/comment/reply',
+          component: resolve => require(['@/components/page/CommentReply'], resolve)
         },
         {
-          path: '/pages',
-          component: resolve => require(['@/components/page/Pages'], resolve)
-        },
-        {
-          name: 'pageAdd',
-          path: '/pages/add',
-          component: resolve => require(['@/components/page/PageAdd'], resolve)
-        },
-        {
-          path: '/pages/:id',
-          component: resolve => require(['@/components/page/PageAdd'], resolve)
+          path: '/member',
+          component: resolve => require(['@/components/page/Member'], resolve)
         },
         {
           path: '/logs',
           component: resolve => require(['@/components/page/Logs'], resolve)
-        },
-        {
-          path: '/mkhtml',
-          component: resolve => require(['@/components/page/Makehtml'], resolve)
-        },
+        }
       ]
     }
   ]
