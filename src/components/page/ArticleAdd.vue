@@ -1,12 +1,12 @@
 <template>
     <div id="hw-article-add">
       <div class="page-boxtitle">
-        <strong class="title" v-if="addForm.id">编辑资讯</strong>
-        <strong class="title" v-else>新增资讯</strong>
+        <strong class="title" v-if="addForm.id">编辑文章</strong>
+        <strong class="title" v-else>新增文章</strong>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">资讯</el-breadcrumb-item>
-          <el-breadcrumb-item v-if="addForm.id">编辑资讯</el-breadcrumb-item>
-          <el-breadcrumb-item v-else>新增资讯</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">文章</el-breadcrumb-item>
+          <el-breadcrumb-item v-if="addForm.id">编辑文章</el-breadcrumb-item>
+          <el-breadcrumb-item v-else>新增文章</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -15,7 +15,7 @@
             <el-input v-model="addForm.title"></el-input>
           </el-form-item>
           <el-form-item label="所属分类" prop="cid">
-            <el-select v-model="addForm.cid" placeholder="请选择资讯分类">
+            <el-select v-model="addForm.cid" placeholder="请选择文章分类">
               <template v-for="item in cates">
                 <el-option :key="item.id" :label="item.title" :value="item.id"></el-option>
               </template>
@@ -25,7 +25,7 @@
           <el-form-item label="缩略图" prop="pic">
             <el-upload
               class="avatar-uploader"
-              action="/admin/article/upload/type/1"
+              action="/api/article/upload/type/1"
               :headers="upheaders"
               :show-file-list="false"
               :on-success="uploadSuccess"
@@ -33,38 +33,49 @@
               <img v-if="picUrl" :src="picUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
-            <span style="color:#999; margin-left:10px;">支持jpg,png,gif格式图片，1MB以内，最佳尺寸：450x250像素。</span>
+            <span style="color:#999; margin-left:10px;">支持jpg,png,gif格式图片，500KB以内，最佳尺寸：280x180像素。</span>
           </el-form-item>
-          <el-form-item label="使用链接" prop="url">
-            <el-switch
-              v-model="addForm.is_url"
-              active-color="#13ce66"
-              inactive-color="#d0d0d0">
-            </el-switch>
-          </el-form-item>
-          <el-form-item label="内容链接" prop="content" v-if="addForm.is_url">
-            <el-input v-model="addForm.content" placeholder="粘贴微信文章链接"></el-input>
-          </el-form-item>
-          <el-form-item label="资讯内容" prop="content" v-else>
-            <quill-editor ref="myTextEditor" v-model="addForm.content" :options="editorOption"></quill-editor>
-            <br/><br/>
-          </el-form-item>
-          
           <el-form-item label="关键字" prop="keywords">
             <el-input v-model="addForm.keywords" placeholder="多个关键字请用英文逗号','隔开"></el-input>
           </el-form-item>
-          <el-form-item label="简介概述" prop="intro">
+          <el-form-item label="简介概述" prop="abstracts">
             <el-input v-model="addForm.intro" type="textarea" placeholder="内容概述，不填则会自动取内容前100字，如果是链接，则需要手动填写"></el-input>
           </el-form-item>
+
+          <el-form-item label="文章内容" prop="content">
+            <quill-editor ref="myTextEditor" v-model="addForm.content" :options="editorOption" style="line-height:25px"></quill-editor>
+            <br/><br/>
+          </el-form-item>
+          
           <el-row>
             <el-col :span="12">
-              <el-form-item label="编辑" prop="author">
+              <el-form-item label="是否推荐" prop="ishot">
+                <el-switch
+                  v-model="addForm.ishot"
+                  active-color="#13ce66"
+                  inactive-color="#e0e0e0">
+                </el-switch>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="是否原创" prop="isorig">
+                <el-switch
+                  v-model="addForm.isorig"
+                  active-color="#13ce66"
+                  inactive-color="#e0e0e0">
+                </el-switch>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="作者" prop="author">
                 <el-input v-model="addForm.author" placeholder=""></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="来源" prop="source">
-                <el-input v-model="addForm.source" placeholder=""></el-input>
+                <el-input v-model="addForm.source" placeholder="helloweba.net"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -110,7 +121,7 @@ export default {
   },
   data () {
     return {
-      url: '/admin/article',
+      url: '/api/article',
       cates: [],
       picUrl: '',
       fileList: [],
@@ -122,9 +133,10 @@ export default {
         title: '',
         cid: '',
         keywords: '',
-        intro: '',
+        abstracts: '',
         pic: '',
-        is_url: true,
+        ishot: false,
+        isorig: false,
         author: sessionStorage.getItem('hw_username'),
         source: '',
         create_time: (new Date()).getFullYear()+'-'+((new Date()).getMonth()+1)+'-'+(new Date()).getDate()+' '+(new Date()).getHours()+':'+(new Date()).getMinutes()+':'+(new Date()).getSeconds(),
@@ -135,7 +147,7 @@ export default {
             loading: true,
             name: 'file',
             size: 1, // 1M
-            action: '/admin/article/upload',
+            action: '/api/article/upload',
             headers: (xhr) => {
               xhr.setRequestHeader('X-token', sessionStorage.getItem('token'))
             },
@@ -225,10 +237,9 @@ export default {
       this.$refs[formName].resetFields()
     },
     getCate () {
-      let self = this
-      self.$axios.get(self.url + '/getCate?pid=2'
+      this.$axios.get(this.url + '/getCate'
       ).then((res) => {
-        self.cates = res.data
+        this.cates = res.data
       }).catch((error) => {
         console.log(error)
         this.$message.error('请求数据没有响应！')
@@ -238,12 +249,8 @@ export default {
     getArticleInfo () {
       let articleId = this.$route.params.id
       if (articleId) {
-        let self = this
-        self.$axios.get(self.url + '/edit', {
-          params: {
-            id: articleId
-          }
-        }).then((res) => {
+        this.$axios.get(this.url + '/' + articleId)
+        .then((res) => {
           if (res.data.result === 'failed') {
             this.$message.error(res.data.message)
           } else {

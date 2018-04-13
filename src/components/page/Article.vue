@@ -1,15 +1,15 @@
  <template>
     <div id="hw-article">
       <div class="page-boxtitle">
-        <strong class="title">资讯列表</strong>
+        <strong class="title">文章列表</strong>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">资讯</el-breadcrumb-item>
-          <el-breadcrumb-item>资讯列表</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">文章</el-breadcrumb-item>
+          <el-breadcrumb-item>文章列表</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
       <div class="query-box">
-          <el-select v-model="selectCate" placeholder="资讯分类" class="handle-select" @change="selectCateOpt">
+          <el-select v-model="selectCate" placeholder="文章分类" class="handle-select" @change="selectCateOpt">
             <template v-for="item in cates">
               <el-option :key="item.id" :label="item.title" :value="item.id"></el-option>
             </template>
@@ -36,7 +36,7 @@
         <el-table-column prop="hits" label="点击量" width="100" sortable>
         </el-table-column>
         </el-table-column>
-        <el-table-column prop="create_time" label="发布时间" width="180" sortable>
+        <el-table-column prop="created_at" label="发布时间" width="180" sortable>
         </el-table-column>
         <el-table-column label="操作" width="120">
           <template slot-scope="scope">
@@ -68,7 +68,7 @@
   export default {
     data () {
       return {
-        url: '/admin/article',
+        url: '/api/article',
         loading: true,
         selectCate: '',
         selectDate: '',
@@ -120,7 +120,7 @@
       },
       getCate () {
         let self = this
-        self.$axios.get(self.url + '/getCate/?pid=2'
+        self.$axios.get(self.url + '/getCate'
         ).then((res) => {
           self.cates = res.data
         }).catch((error) => {
@@ -187,26 +187,25 @@
         this.$router.push('/article/' + row.id)
       },
       handleDelete (index, row) {
-        const self = this
         let articleId = row.id
         this.$confirm('您确定要删除该数据吗？', '操作提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          self.$axios.post(self.url + '/delete', {
+          this.$axios.post(this.url + '/delete', {
             id: articleId
           }).then((res) => {
             if (res.data.result === 'failed') {
               this.$message.error(res.data.msg)
             } else {
-              self.$message({
+              this.$message({
                 message: '成功删除！',
                 type: 'success'
               })
               this.reload()
             }
-            self.multipleSelection = []
+            this.multipleSelection = []
           }).catch((error) => {
             console.log(error)
             this.$message.error('请求数据没有响应！')
@@ -237,7 +236,7 @@
     margin-bottom: 20px;
 }
 .handle-select{
-    width: 120px;
+    width: 150px;
 }
 .handle-input{
     width: 300px;

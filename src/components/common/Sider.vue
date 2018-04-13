@@ -35,7 +35,7 @@ export default {
         {
           icon: 'icon-yanchurili',
           index: '/article',
-          title: '文章管理',
+          title: '文章',
           subs: [
             {
               index: '/article',
@@ -58,7 +58,7 @@ export default {
         {
           icon: 'icon-wodedingdan',
           index: '/comments',
-          title: '评论管理',
+          title: '评论',
           subs: [
             {
               index: '/comments',
@@ -73,12 +73,12 @@ export default {
         {
           icon: 'icon-circle',
           index: '/member',
-          title: '会员管理'
+          title: '会员'
         },
         {
           icon: 'icon-shezhi',
-          index: '/mkhtml',
-          title: '操作日志'
+          index: '/log',
+          title: '日志'
         }
       ]
     }
