@@ -11,8 +11,8 @@ import './assets/css/iconfont.css'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 // axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost:9999'
-//http://localhost:9898
+axios.defaults.baseURL = ''
+//http://localhost:9999
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 Vue.prototype.$axios = axios
 
@@ -38,23 +38,23 @@ axios.interceptors.response.use(response => {
   return Promise.reject(err)
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     let token = sessionStorage.getItem('token')
-//     if (!token) {
-//       next({
-//         path: 'login',
-//         query: {
-//           redirect: to.fullPath
-//         }
-//       })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let token = sessionStorage.getItem('token')
+    if (!token) {
+      next({
+        path: 'login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

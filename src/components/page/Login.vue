@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <div class="hw-login">
-            <div class="hw-title">高重网站管理系统</div>
+            <div class="hw-title">HW网站管理系统</div>
             <el-form ref="loginForm" :model="loginForm" :rules="rules" @submit.prevent="submitForm('loginForm')">
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.username" placeholder="请输入账号"></el-input>
