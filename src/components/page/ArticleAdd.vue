@@ -36,7 +36,14 @@
             <span style="color:#999; margin-left:10px;">支持jpg,png,gif格式图片，500KB以内，最佳尺寸：280x180像素。</span>
           </el-form-item>
           <el-form-item label="关键字" prop="keywords">
-            <el-input v-model="addForm.keywords" placeholder="多个关键字请用英文逗号','隔开"></el-input>
+            <el-select v-model="addForm.keywords" multiple placeholder="请选择" style="width:100%">
+              <el-option
+                v-for="item in tags"
+                :key="item.ename"
+                :label="item.tagname"
+                :value="item.ename">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="简介概述" prop="abstracts">
             <el-input v-model="addForm.intro" type="textarea" placeholder="内容概述，不填则会自动取内容前100字，如果是链接，则需要手动填写"></el-input>
@@ -123,6 +130,7 @@ export default {
     return {
       url: '/api/article',
       cates: [],
+      tags: [],
       picUrl: '',
       fileList: [],
       upheaders: {
@@ -132,7 +140,7 @@ export default {
         id: '',
         title: '',
         cid: '',
-        keywords: '',
+        keywords: [],
         abstracts: '',
         pic: '',
         ishot: false,
@@ -200,6 +208,7 @@ export default {
   created () {
     this.getArticleInfo()
     this.getCate()
+    this.getTags()
   },
   methods: {
     submit (formName) {
@@ -241,11 +250,17 @@ export default {
       ).then((res) => {
         this.cates = res.data
       }).catch((error) => {
-        console.log(error)
         this.$message.error('请求数据没有响应！')
       })
     },
-    
+    getTags () {
+      this.$axios.get(this.url + '/getTags'
+      ).then((res) => {
+        this.tags = res.data
+      }).catch((error) => {
+        this.$message.error('请求数据没有响应！')
+      })
+    },
     getArticleInfo () {
       let articleId = this.$route.params.id
       if (articleId) {

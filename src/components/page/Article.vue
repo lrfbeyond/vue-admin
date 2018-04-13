@@ -33,7 +33,11 @@
         </el-table-column>
         <el-table-column prop="cate" label="类别" width="180">
         </el-table-column>
-        <el-table-column prop="hits" label="点击量" width="100" sortable>
+        <el-table-column prop="hits" label="点击" width="100" sortable>
+        </el-table-column>
+        <el-table-column prop="downs" label="下载" width="100" sortable>
+        </el-table-column>
+        <el-table-column prop="mark" label="收藏" width="100" sortable>
         </el-table-column>
         </el-table-column>
         <el-table-column prop="created_at" label="发布时间" width="180" sortable>
