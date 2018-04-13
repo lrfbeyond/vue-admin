@@ -88,7 +88,7 @@ export default {
       })
     },
     refreshCode () {
-      this.codeImg = 'http://localhost:9999/api/auth/captcha'+ '?'+ Math.random()*1000;
+      this.codeImg = '/api/auth/captcha'+ '?'+ Math.random()*1000;
     }
   },
   mounted: function() {
@@ -98,11 +98,12 @@ export default {
 </script>
 
 <style scoped>
+
 .login-wrap{
     position: fixed;
     width: 100%;
     height: 100%;
-    background: #1F2D3D;
+    background: #1F2D3D url(../../assets/bg.jpg);
 }
 .hw-title{
     font-weight: bold;

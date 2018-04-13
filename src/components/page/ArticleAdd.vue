@@ -89,9 +89,9 @@
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="发布时间" prop="create_time">
+              <el-form-item label="发布时间" prop="created_at">
                 <el-date-picker
-                  v-model="addForm.create_time"
+                  v-model="addForm.created_at"
                   type="datetime"
                   placeholder="addForm.nowtime">
                 </el-date-picker>
@@ -147,7 +147,7 @@ export default {
         isorig: false,
         author: sessionStorage.getItem('hw_username'),
         source: '',
-        create_time: (new Date()).getFullYear()+'-'+((new Date()).getMonth()+1)+'-'+(new Date()).getDate()+' '+(new Date()).getHours()+':'+(new Date()).getMinutes()+':'+(new Date()).getSeconds(),
+        created_at: (new Date()).getFullYear()+'-'+((new Date()).getMonth()+1)+'-'+(new Date()).getDate()+' '+(new Date()).getHours()+':'+(new Date()).getMinutes()+':'+(new Date()).getSeconds(),
       },
       editorOption: {
         modules: {
