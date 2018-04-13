@@ -44,14 +44,6 @@ export default {
             {
               index: '/article/add',
               title: '新增文章',
-            },
-            {
-              index: '/catelog',
-              title: '文章分类',
-            },
-            {
-              index: '/catelog/add',
-              title: '新增分类',
             }
           ]
         },

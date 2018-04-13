@@ -43,10 +43,6 @@ export default new Router({
           component: resolve => require(['@/components/page/ArticleAdd'], resolve)
         },
         {
-          path: '/catelog',
-          component: resolve => require(['@/components/page/Catelog'], resolve)
-        },
-        {
           name: 'comment',
           path: '/comment',
           component: resolve => require(['@/components/page/Comment'], resolve)
