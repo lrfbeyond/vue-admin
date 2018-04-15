@@ -1,10 +1,10 @@
  <template>
     <div id="hw-article">
       <div class="page-boxtitle">
-        <strong class="title">产品列表</strong>
+        <strong class="title">评论列表</strong>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">产品</el-breadcrumb-item>
-          <el-breadcrumb-item>产品列表</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">评论</el-breadcrumb-item>
+          <el-breadcrumb-item>评论列表</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -17,7 +17,7 @@
             value-format="yyyy-MM-dd"
             placeholder="选择日期" style="width:150px">
           </el-date-picker>
-          <el-input placeholder="输入产品名称关键字" suffix-icon="el-icon-search" v-model="selectWord" @keyup.enter.native="searchRecord" style="width: 200px; margin-left:10px"></el-input>
+          <el-input placeholder="输入关键字" suffix-icon="el-icon-search" v-model="selectWord" @keyup.enter.native="searchRecord" style="width: 200px; margin-left:10px"></el-input>
       </div>
 
       <el-table :data="tableData" stripe style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange"  v-loading="loading">
@@ -25,14 +25,20 @@
         </el-table-column>
         <el-table-column prop="id" label="ID" width="60" sortable>
         </el-table-column>
-        <el-table-column prop="title" label="产品名称">
+        <el-table-column prop="message" label="评论内容">
+          <template slot-scope="scope">
+            <i v-if="scope.row.is_reply == 1" class="el-icon-success" style="color:#13CE66" title="已回复"></i>
+            {{scope.row.message}}
+          </template>
         </el-table-column>
-        <el-table-column prop="hits" label="点击量" width="150" sortable>
+        <el-table-column prop="author_name" label="评论者" width="150">
+        </el-table-column>
+        <el-table-column prop="article_title" label="文章" width="250">
         </el-table-column>
         </el-table-column>
-        <el-table-column prop="create_time" label="发布时间" width="240" sortable>
+        <el-table-column prop="created_at" label="评论时间" width="180" sortable>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <i class="iconfont icon-changyonggoupiaorenbianji row-opt" title="编辑" @click="handleEdit(scope.$index, scope.row)"></i>
             <i class="iconfont icon-changyonggoupiaorenshanchu row-opt" title="删除" @click="handleDelete(scope.$index, scope.row)"></i>
@@ -62,9 +68,8 @@
   export default {
     data () {
       return {
-        url: '/admin/article',
+        url: '/api/comment',
         loading: true,
-        selectCate: 1,
         selectDate: '',
         selectWord: '',
         isSearch: false,
@@ -85,26 +90,23 @@
       reload () {
         this.searchRecord()
       },
-      selectCateOpt (target) {
-        this.searchRecord()
-      },
       searchRecord () {
         let self = this
         this.$axios.get(this.url, {
           params: {
             page: this.currentPage,
-            cate: this.selectCate,
             date: this.selectDate,
             keys: this.selectWord
           }
         }).then((res) => {
-          if (res.data.result === 'failed') {
-            this.$message.error(res.data.message)
-          } else {
+          if (res.status === 200) {
             this.loading = false;
             this.tableData = res.data.list
             this.total = res.data.total
+          } else {
+            this.$message.error(res.data.message)
           }
+          
         }).catch((error) => {
           console.log(error)
           this.$message.error('请求数据没有响应！')
@@ -167,7 +169,7 @@
         this.multipleSelection = val
       },
       handleEdit (index, row) {
-        this.$router.push('/product/' + row.id)
+        this.$router.push('/comment/' + row.id)
       },
       handleDelete (index, row) {
         const self = this

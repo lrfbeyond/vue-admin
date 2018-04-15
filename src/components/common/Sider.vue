@@ -39,28 +39,18 @@ export default {
           subs: [
             {
               index: '/article',
-              title: '文章列表',
+              title: '文章列表'
             },
             {
               index: '/article/add',
-              title: '新增文章',
+              title: '新增文章'
             }
           ]
         },
         {
           icon: 'icon-wodedingdan',
           index: '/comment',
-          title: '评论',
-          subs: [
-            {
-              index: '/comment',
-              title: '评论列表',
-            },
-            {
-              index: '/comment/reply',
-              title: '最新回复'
-            }
-          ]
+          title: '评论'
         },
         {
           icon: 'icon-circle',
@@ -69,7 +59,7 @@ export default {
         },
         {
           icon: 'icon-shezhi',
-          index: '/log',
+          index: '/logs',
           title: '日志'
         }
       ]

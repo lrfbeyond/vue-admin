@@ -2,7 +2,7 @@
     <div class="header">
         <div class="logo">HW后台管理系统</div>
         <div class="user-info">
-          <span><i class="iconfont icon-shouye"></i> <a href="/" target="_blank">首页</a></span>
+          <span><i class="iconfont icon-shouye"></i> <a href="http://www.helloweba.net/" target="_blank">网站首页</a></span>
             <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
                     <i class="iconfont icon-wode"></i> {{username}}

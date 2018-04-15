@@ -25,7 +25,7 @@
           <el-form-item label="缩略图" prop="pic">
             <el-upload
               class="avatar-uploader"
-              action="/api/article/upload/type/1"
+              action="/api/article/upload"
               :headers="upheaders"
               :show-file-list="false"
               :on-success="uploadSuccess"

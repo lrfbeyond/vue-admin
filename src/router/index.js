@@ -48,12 +48,16 @@ export default new Router({
           component: resolve => require(['@/components/page/Comment'], resolve)
         },
         {
-          path: '/comment/reply',
-          component: resolve => require(['@/components/page/CommentReply'], resolve)
+          path: '/comment/:id',
+          component: resolve => require(['@/components/page/CommentEdit'], resolve)
         },
         {
           path: '/member',
           component: resolve => require(['@/components/page/Member'], resolve)
+        },
+        {
+          path: '/member/:id',
+          component: resolve => require(['@/components/page/MemberEdit'], resolve)
         },
         {
           path: '/logs',

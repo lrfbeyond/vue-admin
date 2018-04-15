@@ -1,10 +1,10 @@
  <template>
     <div id="hw-article">
       <div class="page-boxtitle">
-        <strong class="title">单页列表</strong>
+        <strong class="title">会员列表</strong>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">单页</el-breadcrumb-item>
-          <el-breadcrumb-item>单页列表</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">会员</el-breadcrumb-item>
+          <el-breadcrumb-item>会员列表</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -24,12 +24,16 @@
         </el-table-column>
         <el-table-column prop="id" label="ID" width="60" sortable>
         </el-table-column>
-        <el-table-column prop="title" label="标题">
+        <el-table-column prop="username" label="用户名" sortable>
         </el-table-column>
-        <el-table-column prop="hits" label="点击量" width="150" sortable>
+        <el-table-column prop="nickname" label="昵称" width="150" >
+        </el-table-column>
+        <el-table-column prop="stat" label="状态" width="150" sortable>
+        </el-table-column>
+        <el-table-column prop="from" label="来源" width="150">
         </el-table-column>
         </el-table-column>
-        <el-table-column prop="create_time" label="发布时间" width="240" sortable>
+        <el-table-column prop="created_at" label="注册时间" width="240" sortable>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -61,9 +65,8 @@
   export default {
     data () {
       return {
-        url: '/admin/article',
+        url: '/api/member',
         loading: true,
-        selectCate: 5,
         selectDate: '',
         selectWord: '',
         isSearch: false,
@@ -92,17 +95,16 @@
         this.$axios.get(this.url, {
           params: {
             page: this.currentPage,
-            cate: this.selectCate,
             date: this.selectDate,
             keys: this.selectWord
           }
         }).then((res) => {
-          if (res.data.result === 'failed') {
-            this.$message.error(res.data.msg)
-          } else {
+          if (res.status == 200) {
             this.loading = false;
             this.tableData = res.data.list
             this.total = res.data.total
+          } else {
+            this.$message.error(res.data.message)
           }
         }).catch((error) => {
           console.log(error)
@@ -165,7 +167,7 @@
         this.multipleSelection = val
       },
       handleEdit (index, row) {
-        this.$router.push('/pages/' + row.id)
+        this.$router.push('/member/' + row.id)
       },
       handleDelete (index, row) {
         const self = this

@@ -3,7 +3,7 @@
       <div class="page-boxtitle">
         <strong class="title">操作日志</strong>
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/' }">系统管理</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/' }">日志</el-breadcrumb-item>
           <el-breadcrumb-item>操作日志</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -24,14 +24,14 @@
         </el-table-column>
         <el-table-column prop="id" label="ID" width="60" sortable>
         </el-table-column>
-        <el-table-column prop="create_time" label="时间" width="180" sortable>
+        <el-table-column prop="created_at" label="时间" width="180" sortable>
         </el-table-column>
-        <el-table-column prop="opter" label="操作者" width="180">
+        <el-table-column prop="username" label="操作者" width="180">
         </el-table-column>
-        <el-table-column prop="content" label="日志内容">
+        <el-table-column prop="event" label="日志内容">
         </el-table-column>
         </el-table-column>
-        <el-table-column prop="ip" label="IP" width="180">
+        <el-table-column prop="logip" label="IP" width="180">
         </el-table-column>
       </el-table>
       <div class="pagination">
@@ -57,7 +57,7 @@
   export default {
     data () {
       return {
-        url: '/admin/logs',
+        url: '/api/logs',
         loading: true,
         selectDate: '',
         opters: [],
@@ -89,28 +89,19 @@
             keys: this.selectWord
           }
         }).then((res) => {
-          if (res.data.result === 'failed') {
-            this.$message.error(res.data.message)
-          } else {
+          if (res.status == 200) {
             this.loading = false;
             this.tableData = res.data.list
             this.total = res.data.total
+          } else {
+            this.$message.error(res.data.message)
           }
         }).catch((error) => {
           console.log(error)
           this.$message.error('请求数据没有响应！')
         })
       },
-      getCate () {
-        let self = this
-        self.$axios.get(self.url + '/getCate/?pid=2'
-        ).then((res) => {
-          self.cates = res.data
-        }).catch((error) => {
-          console.log(error)
-          this.$message.error('请求数据没有响应！')
-        })
-      },
+      
       handleCurrentChange (val) {
         this.currentPage = val
         this.searchRecord()

@@ -1,7 +1,13 @@
 <template>
   <div>
-    <div class="welcome">欢迎管理员：{{ username }}。</div>
+    <!-- <div class="welcome">欢迎管理员：{{ username }}。</div> -->
     
+    <el-row :gutter="20">
+      <el-col :span="8"><div class="bg-div bg-blue">文章总数<br/><span>{{total.totalArticles}}</span></div></el-col>
+      <el-col :span="8"><div class="bg-div bg-green">评论总数<br/><span>{{total.totalComments}}</span></div></el-col>
+      <el-col :span="8"><div class="bg-div bg-orange">会员总数<br/><span>{{total.totalMembers}}</span></div></el-col>
+    </el-row>
+
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card class="box-card">
@@ -28,10 +34,10 @@
       <el-col :span="24">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>文章统计</span>
+            <span>整站统计</span>
           </div>
           <div class="text item">
-            <div id="chartBar" style="width:100%; height:240px;"></div>
+            <div id="chartLine" style="width:100%; height:240px;"></div>
           </div>
         </el-card>
       </el-col>
@@ -59,79 +65,69 @@ const pieOption = {
   ]
 }
 
-const barOption = {
-  tooltip : {
-      trigger: 'axis',
-      axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-          type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-      }
-  },
-  legend: {
-      data:[]
-  },
-  grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-  },
-  //color: ['#d48265', '#91c7ae'],
-  xAxis : [
-      {
-          type : 'category',
-          data : []
-      }
-  ],
-  yAxis : [
-      {
-          type : 'value'
-      }
-  ],
-  series : [
-      
-      {
-          name:'Javascript前端',
-          type:'bar',
-          stack: '广告',
-          data:[]
-      },
-      {
-          name:'PHP后端',
-          type:'bar',
-          stack: '广告',
-          data:[]
-      },
-      {
-          name:'运维知识',
-          type:'bar',
-          stack: '广告',
-          data:[]
-      },
-      {
-          name:'业内关注',
-          type:'bar',
-          stack: '广告',
-          data:[]
-      },
-      {
-          name:'收录导航',
-          type:'bar',
-          stack: '广告',
-          data:[]
-      }
-  ]
+const lineOption = {
+    // title: {
+    //     text: '整站统计'
+    // },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['文章','会员','评论']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+   
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: []
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'文章',
+            type:'line',
+            stack: '总量',
+            data:[]
+        },
+        {
+            name:'会员',
+            type:'line',
+            stack: '总量',
+            data:[]
+        },
+        {
+            name:'评论',
+            type:'line',
+            stack: '总量',
+            data:[]
+        }
+    ]
 }
 
 export default {
   data () {
     return {
       url: '/api/home',
+      total: {
+        totalArticles: 0,
+        totalComments: 0,
+        totalMembers: 0
+      },
       optLog: [],
       chartPie: null,
       chartBar: null
     }
   },
   created () {
+    this.getTotals()
     this.getOptLog()
   },
   computed: {
@@ -145,6 +141,15 @@ export default {
     }
   },
   methods: {
+    getTotals () {
+      this.$axios.get(this.url + '/getTotals'
+      ).then((res) => {
+        this.total = res.data
+      }).catch((error) => {
+        //console.log(error)
+        this.$message.error('请求数据没有响应！')
+      })
+    },
     getOptLog () {
       this.$axios.get(this.url + '/getOptLog'
       ).then((res) => {
@@ -176,39 +181,27 @@ export default {
         this.$message.error('请求数据没有响应！')
       });
     },
-    drawBarChart () {
-      this.chartBar = echarts.init(document.getElementById('chartBar'));
-      this.chartBar.setOption(barOption);
-      this.$axios.get(this.url + '/getBarData'
+    drawLineChart () {
+      this.chartLine = echarts.init(document.getElementById('chartLine'));
+      this.chartLine.setOption(lineOption);
+      this.$axios.get(this.url + '/getLineData'
       ).then((res) => {
-        let cate = res.data.cate;
-        let data = res.data.data;
-        let cates = new Array(),
-            datas = new Array();
-        for (var i = 0; i < cate.length; i++) {
-          cates[i] = cate[i].title;
-          datas[i] = data[i]
-        }
-
-        this.chartBar.hideLoading();
-        this.chartBar.setOption({
-          legend: {
-              data: cates
+        this.chartLine.hideLoading();
+        this.chartLine.setOption({
+          xAxis: {
+              data: res.data.date
           },
-          xAxis: [{
-            data: res.data.date
-          }],
-          series: [{
-            data: res.data.data[0]
-          },{
-            data: res.data.data[1]
-          },{
-            data: res.data.data[2]
-          },{
-            data: res.data.data[3]
-          },{
-            data: res.data.data[4]
-          }]
+          series: [
+              {
+                  data: res.data.dataArticle
+              },
+              {
+                  data: res.data.dataMember
+              },
+              {
+                  data: res.data.dataComment
+              }
+          ]
         });
       }).catch((error) => {
         console.log(error)
@@ -218,7 +211,7 @@ export default {
   },
   mounted: function () {
     this.drawPieChart();
-    this.drawBarChart();
+    this.drawLineChart();
   },
   updated: function () {
     //this.getPieData();
