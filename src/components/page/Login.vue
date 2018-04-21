@@ -121,9 +121,13 @@ export default {
     padding: 40px;
     border-radius: 5px; 
     background: #fff;
+    box-shadow: 3px 3px 2px #888;
 }
 .code-img{
   vertical-align: middle;
   cursor: pointer;
+}
+.el-button{
+  width: 100%
 }
 </style>

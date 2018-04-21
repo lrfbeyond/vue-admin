@@ -1,11 +1,13 @@
 <template>
     <div class="header">
-        <div class="logo">HW后台管理系统</div>
+        <div class="logo">
+          HW后台管理系统
+        </div>
         <div class="user-info">
           <span><i class="iconfont icon-shouye"></i> <a href="http://www.helloweba.net/" target="_blank">网站首页</a></span>
             <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
-                    <i class="iconfont icon-wode"></i> {{username}}
+                    <i class="iconfont icon-wo"></i> {{username}}
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="editpass">修改密码</el-dropdown-item>
@@ -35,6 +37,8 @@
 </template>
 
 <script>
+import '../../assets/logo.png'
+
 export default {
   data () {
     return {
@@ -135,7 +139,8 @@ export default {
     .header .logo{
         float: left;
         width:250px;
-        padding-left: 30px;
+        padding-left: 60px;
+        background: url(../../assets/logo.png) no-repeat 6px 10px;
     }
     .user-info {
         float: right;

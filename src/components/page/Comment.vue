@@ -40,8 +40,8 @@
         </el-table-column>
         <el-table-column label="操作" width="100">
           <template slot-scope="scope">
-            <i class="iconfont icon-changyonggoupiaorenbianji row-opt" title="编辑" @click="handleEdit(scope.$index, scope.row)"></i>
-            <i class="iconfont icon-changyonggoupiaorenshanchu row-opt" title="删除" @click="handleDelete(scope.$index, scope.row)"></i>
+            <i class="iconfont icon-edit row-opt" title="编辑" @click="handleEdit(scope.$index, scope.row)"></i>
+            <i class="iconfont icon-delete row-opt" title="删除" @click="handleDelete(scope.$index, scope.row)"></i>
           </template>
         </el-table-column>
       </el-table>

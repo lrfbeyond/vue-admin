@@ -30,6 +30,10 @@
         <el-table-column prop="id" label="ID" width="60" sortable>
         </el-table-column>
         <el-table-column prop="title" label="标题">
+          <template slot-scope="scope">
+            {{scope.row.title}}
+            <i v-if="scope.row.ishot == 1" class="iconfont icon-i-good" style="color:#f60" title="推荐"></i>
+          </template>
         </el-table-column>
         <el-table-column prop="cate" label="类别" width="180">
         </el-table-column>
@@ -44,8 +48,8 @@
         </el-table-column>
         <el-table-column label="操作" width="120">
           <template slot-scope="scope">
-            <i class="iconfont icon-changyonggoupiaorenbianji row-opt" title="编辑" @click="handleEdit(scope.$index, scope.row)"></i>
-            <i class="iconfont icon-changyonggoupiaorenshanchu row-opt" title="删除" @click="handleDelete(scope.$index, scope.row)"></i>
+            <i class="iconfont icon-edit row-opt" title="编辑" @click="handleEdit(scope.$index, scope.row)"></i>
+            <i class="iconfont icon-delete row-opt" title="删除" @click="handleDelete(scope.$index, scope.row)"></i>
           </template>
         </el-table-column>
       </el-table>

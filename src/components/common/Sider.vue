@@ -28,12 +28,12 @@ export default {
     return {
       items: [
         {
-          icon: 'icon-fenlei',
+          icon: 'icon-all',
           index: '/main',
           title: '控制台'
         },
         {
-          icon: 'icon-yanchurili',
+          icon: 'icon-form',
           index: '/article',
           title: '文章',
           subs: [
@@ -48,17 +48,17 @@ export default {
           ]
         },
         {
-          icon: 'icon-wodedingdan',
+          icon: 'icon-comments',
           index: '/comment',
           title: '评论'
         },
         {
-          icon: 'icon-circle',
+          icon: 'icon-account',
           index: '/member',
           title: '会员'
         },
         {
-          icon: 'icon-shezhi',
+          icon: 'icon-msnui-history',
           index: '/logs',
           title: '日志'
         }
