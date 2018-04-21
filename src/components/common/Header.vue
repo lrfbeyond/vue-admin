@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import '../../assets/logo.png'
 
 export default {
   data () {

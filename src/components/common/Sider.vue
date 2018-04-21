@@ -1,6 +1,7 @@
 <template>
     <div class="sidebar">
-      <el-menu :default-active="onRoutes" class="" them="dark" unique-opened router>
+      <el-menu :default-active="onRoutes" class="el-menu-vertical" them="dark" unique-opened router >
+
         <template v-for="item in items">
           <template v-if="item.subs">
             <el-submenu :index="item.index">
@@ -95,4 +96,9 @@ export default {
     background: #eef1f6;
   }
 }
+
+.el-menu-vertical:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
 </style>
