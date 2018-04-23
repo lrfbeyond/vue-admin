@@ -22,14 +22,12 @@
 </template>
 
 <script>
-import axios from 'axios'
-// import { mapActions } from 'vuex'
-// import { STORAGE_KEY } from '../../utils/storage' 496081
 
 export default {
   data () {
     return {
       loading: false,
+      url: '/api/auth',
       codeImg: '',
       loginForm: {
         username: '',
@@ -51,16 +49,11 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      console.log(formName)
-      // const self = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true
           var formData = this.loginForm
-          // var params = new URLSearchParams();
-          // params.append('username', this.loginForm.username)
-          // params.append('password', this.loginForm.password)
-          axios.post('/api/auth', formData)
+          this.$axios.post(this.url, formData)
           .then((res) => {
             if (res.data.result === 'success') {
               this.loading = false
@@ -88,7 +81,7 @@ export default {
       })
     },
     refreshCode () {
-      this.codeImg = '/api/auth/captcha'+ '?'+ Math.random()*1000;
+      this.codeImg = this.url + '/captcha'+ '?'+ Math.random()*1000;
     }
   },
   mounted: function() {
