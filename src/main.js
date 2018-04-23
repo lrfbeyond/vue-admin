@@ -11,7 +11,7 @@ import './assets/css/iconfont.css'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 // axios.defaults.withCredentials = true
-axios.defaults.baseURL = ''
+axios.defaults.baseURL = 'http://localhost:9999'
 //http://localhost:9999
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 Vue.prototype.$axios = axios
@@ -28,33 +28,33 @@ axios.interceptors.request.use(config => {
   return Promise.reject(err)
 })
 
-axios.interceptors.response.use(response => {
-  if (response.data.result === 'failed' && response.data.code === -1) {
-    //this.$message.error('请重新登录！')
-    router.push('/login')
-  }
-  return response
-}, err => {
-  return Promise.reject(err)
-})
+// axios.interceptors.response.use(response => {
+//   if (response.data.result === 'failed' && response.data.code === -1) {
+//     //this.$message.error('请重新登录！')
+//     router.push('/login')
+//   }
+//   return response
+// }, err => {
+//   return Promise.reject(err)
+// })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    let token = sessionStorage.getItem('token')
-    if (!token) {
-      next({
-        path: 'login',
-        query: {
-          redirect: to.fullPath
-        }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     let token = sessionStorage.getItem('token')
+//     if (!token) {
+//       next({
+//         path: 'login',
+//         query: {
+//           redirect: to.fullPath
+//         }
+//       })
+//     } else {
+//       next()
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 /* eslint-disable no-new */
 new Vue({

@@ -62,6 +62,11 @@ export default {
           icon: 'icon-msnui-history',
           index: '/logs',
           title: '日志'
+        },
+        {
+          icon: 'icon-shezhi',
+          index: '/setting',
+          title: '设置'
         }
       ]
     }

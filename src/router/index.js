@@ -62,6 +62,10 @@ export default new Router({
         {
           path: '/logs',
           component: resolve => require(['@/components/page/Logs'], resolve)
+        },
+        {
+          path: '/setting',
+          component: resolve => require(['@/components/page/Setting'], resolve)
         }
       ]
     }
