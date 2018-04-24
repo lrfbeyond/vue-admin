@@ -160,7 +160,7 @@ export default {
               xhr.setRequestHeader('X-token', sessionStorage.getItem('token'))
             },
             response: (res) => {
-              return '/attachments/' + res.savename
+              return '/uploads/' + res.savename
             }
           },
           toolbar: {
@@ -270,7 +270,7 @@ export default {
             this.$message.error(res.data.message)
           } else {
             this.addForm = res.data.row;
-            this.picUrl = '/attachments/' +　res.data.row.pic
+            this.picUrl = '/uploads/' +　res.data.row.pic
           }
         }).catch((error) => {
           console.log(error)
