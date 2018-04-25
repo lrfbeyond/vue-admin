@@ -2,7 +2,7 @@
     <div class="wrapper">
         <hw-header></hw-header>
         <hw-sider></hw-sider>
-        <div class="content">
+        <div class="content" :style="$store.state.left">
             <transition name="fade" mode="out-in">
                 <router-view></router-view>
             </transition>
