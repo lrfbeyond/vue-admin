@@ -1,11 +1,7 @@
 <template>
     <div class="sidebar">
-        <div class="switchBtn">
-          <p v-if="$store.state.isCollapse" @click="$store.commit('switch_menu')"><i class="iconfont icon-zhankaicaidan"></i></p>
-          <p v-else  @click="$store.commit('switch_menu')"><i class="iconfont icon-shouqicaidan"></i></p>
-        </div>
+      <el-menu :default-active="onRoutes" class="el-menu-vertical" them="dark" unique-opened router >
 
-      <el-menu :default-active="onRoutes" class="el-menu-vertical" them="dark" unique-opened router :collapse="menuShow">
         <template v-for="item in items">
           <template v-if="item.subs">
             <el-submenu :index="item.index">
@@ -31,7 +27,6 @@
 export default {
   data () {
     return {
-      isCollapse: true,
       items: [
         {
           icon: 'icon-all',
@@ -50,6 +45,10 @@ export default {
             {
               index: '/article/add',
               title: '新增文章'
+            },
+            {
+              index: '/catelog',
+              title: '管理分类'
             }
           ]
         },
@@ -77,9 +76,6 @@ export default {
     }
   },
   computed: {
-    menuShow() {
-        return this.$store.state.isCollapse;
-    },
     onRoutes () {
       let path = this.$route.path
       let pathArr = path.split('/')
@@ -99,22 +95,6 @@ export default {
   left: 0;
   top: 70px;
   bottom: 0;
-
-  .switchBtn{
-    width: 100%;
-    height: 30px;
-    line-height: 30px;
-    cursor: pointer;
-    background: #DBE1EC;
-    p{
-      i.icon-shouqicaidan{
-        padding-left: 90px;
-      }
-      i.icon-zhankaicaidan{
-        padding-left: 20px;
-      }
-    }
-  }
   
 
   ul {
@@ -125,12 +105,9 @@ export default {
     background: #eef1f6;
   }
 }
-.iconfont{margin-right: 10px;}
+
 .el-menu-vertical:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
   }
-.el-menu--collapse{
-  width: 50px;
-}
 </style>

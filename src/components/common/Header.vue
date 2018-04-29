@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="logo">
-          HW后台管理系统
+          HW后台管理系统<sup>v2.0</sup>
         </div>
         <div class="user-info">
           <span><i class="iconfont icon-shouye"></i> <a href="http://www.helloweba.net/" target="_blank">网站首页</a></span>
@@ -138,8 +138,13 @@ export default {
     .header .logo{
         float: left;
         width:250px;
-        padding-left: 60px;
+        padding-left: 66px;
         background: url(../../assets/logo.png) no-repeat 6px 10px;
+    }
+    .header .logo sup{
+      margin-left: 10px;
+      color: #999;
+      font-size: 14px;
     }
     .user-info {
         float: right;

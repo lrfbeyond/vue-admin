@@ -86,24 +86,6 @@
               </el-form-item>
             </el-col>
           </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="发布时间" prop="created_at">
-                <el-date-picker
-                  v-model="addForm.created_at"
-                  type="datetime"
-                  placeholder="addForm.nowtime">
-                </el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <!-- <el-form-item label="文件名" prop="html_name">
-                <el-input v-model="addForm.html_name" placeholder="用于生成html页面名称"></el-input>
-              </el-form-item> -->
-            </el-col>
-          </el-row>
-          
           
           <el-form-item style="margin-top:60px">
             <el-button type="primary" native-type="submit" @click="submit('addForm')">提交</el-button>
