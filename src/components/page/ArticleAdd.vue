@@ -33,7 +33,7 @@
               <img v-if="picUrl" :src="picUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
-            <span style="color:#999; margin-left:10px;">支持jpg,png,gif格式图片，500KB以内，最佳尺寸：280x180像素。</span>
+            <span style="color:#999; margin-left:10px;">支持jpg,png,gif格式图片，1MB以内，最佳尺寸：280x180像素。</span>
           </el-form-item>
           <el-form-item label="关键字" prop="keywords">
             <el-select v-model="addForm.keywords" multiple placeholder="请选择" style="width:100%">
@@ -128,8 +128,7 @@ export default {
         ishot: false,
         isorig: false,
         author: sessionStorage.getItem('hw_username'),
-        source: '',
-        created_at: (new Date()).getFullYear()+'-'+((new Date()).getMonth()+1)+'-'+(new Date()).getDate()+' '+(new Date()).getHours()+':'+(new Date()).getMinutes()+':'+(new Date()).getSeconds(),
+        source: ''
       },
       editorOption: {
         modules: {
@@ -161,16 +160,6 @@ export default {
               }
             }
           }
-          // toolbar: [
-          //   [{'size': ['small', false, 'large']}],
-          //   ['bold', 'italic', 'code'],
-          //   // [{'header': 2}],
-          //   // ['blockquote', 'code-block'],
-          //   [{'header': [1, 2, 3, 4, 5, 6, false]}],
-          //   [{'color': []}, {'background': []}], // dropdown with defaults from theme
-          //   [{'list': 'ordered'}, {'list': 'bullet'}],
-          //   ['link', 'image']
-          // ]
         }
       },
       rules: {
@@ -203,13 +192,13 @@ export default {
           }
           this.$axios.post(this.url + '/update', formData)
           .then((res) => {
-            console.log(res);
-            if (res.data.result === 'success') {
+            //console.log(res);
+            if (res.data.result === 'success' && res.status === 200) {
               this.$message({
                 message: msg,
                 type: 'success'
               })
-              setTimeout(this.$router.push('/article'), 2000);
+              setTimeout(this.$router.push('/article'), 3000);
               
             } else {
               this.$message.error(res.data.msg)
