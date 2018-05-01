@@ -138,8 +138,8 @@ export default {
     .header .logo{
         float: left;
         width:250px;
-        padding-left: 66px;
-        background: url(../../assets/logo.png) no-repeat 6px 10px;
+        padding-left: 60px;
+        background: url(../../assets/logo.png) no-repeat 10px 16px;
     }
     .header .logo sup{
       margin-left: 10px;

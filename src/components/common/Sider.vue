@@ -53,7 +53,7 @@ export default {
             },
             {
               index: '/catelog',
-              title: '管理分类'
+              title: '文章分类'
             }
           ]
         },
@@ -70,7 +70,21 @@ export default {
         {
           icon: 'icon-msnui-history',
           index: '/logs',
-          title: '日志'
+          title: '权限',
+          subs: [
+            {
+              index: '/admin',
+              title: '管理员'
+            },
+            {
+              index: '/group',
+              title: '用户组'
+            },
+            {
+              index: '/logs',
+              title: '操作日志'
+            }
+          ]
         },
         {
           icon: 'icon-shezhi',
