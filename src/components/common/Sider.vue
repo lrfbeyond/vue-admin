@@ -111,6 +111,7 @@ export default {
     cursor: pointer;
     background: #DBE1EC;
     p{
+      color: #999;
       i.icon-shouqicaidan{
         padding-left: 90px;
       }
