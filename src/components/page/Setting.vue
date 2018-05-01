@@ -76,18 +76,61 @@
 export default {
   data () {
     return {
-      url: '/api/article',
+      url: '/api/setting',
       addForm: {
-        id: '',
-        title: '',
-        cid: '',
-        keywords: [],
-        abstracts: '',
-        pic: '',
-        ishot: false,
-        isorig: false,
+        comment_enable: true,
+        chk_comment: true,
+        register_enable: true,
+        badword: '',
+        email_enable: true,
+        email_server: '',
+        email_port: '',
+        email_user: '',
+        email_pass: ''
       }
    }
+  },
+  created () {
+    this.getSetting()
+  },
+  methods: {
+    submit (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var formData = this.addForm
+          this.$axios.post(this.url + '/setOk', formData)
+          .then((res) => {
+            if (res.data.result === 'success' && res.status === 200) {
+              this.$message({
+                message: '设置成功',
+                type: 'success'
+              })
+            } else {
+              this.$message.error(res.data.msg)
+            }
+          }).catch((err) => {
+            this.$message.error('出错了')
+            console.log(err)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    getSetting () {
+      this.$axios.get(this.url)
+      .then((res) => {
+        if (res.data.result === 'failed') {
+          this.$message.error(res.data.msg)
+        } else {
+          this.addForm = res.data.row;
+        }
+      }).catch((error) => {
+        console.log(error)
+        this.$message.error('请求数据没有响应！')
+      })
+    }
   }
 }
 </script>
