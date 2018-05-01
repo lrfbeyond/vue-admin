@@ -121,10 +121,10 @@ export default {
     getSetting () {
       this.$axios.get(this.url)
       .then((res) => {
-        if (res.data.result === 'failed') {
-          this.$message.error(res.data.msg)
+        if (res.status === 200) {
+          this.addForm = res.data;
         } else {
-          this.addForm = res.data.row;
+          this.$message.error('出错了')
         }
       }).catch((error) => {
         console.log(error)
