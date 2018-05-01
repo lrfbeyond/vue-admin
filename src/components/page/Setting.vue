@@ -5,21 +5,21 @@
         </div>
 
         <el-form :model="addForm" ref="addForm" label-width="150px"  @submit.prevent="submit()">
-          <el-form-item label="允许评论" prop="comment_enable">
+          <el-form-item label="允许评论" prop="commentEnable">
             <el-switch
-              v-model="addForm.comment_enable"
+              v-model="addForm.commentEnable"
               active-color="#13ce66">
             </el-switch>
           </el-form-item>
-          <el-form-item label="评论需要审核" prop="chk_comment">
+          <el-form-item label="评论需要审核" prop="needCheck">
             <el-switch
-              v-model="addForm.chk_comment"
+              v-model="addForm.needCheck"
               active-color="#13ce66">
             </el-switch>
           </el-form-item>
-          <el-form-item label="允许会员注册" prop="register_enable">
+          <el-form-item label="允许会员注册" prop="regEnable">
             <el-switch
-              v-model="addForm.register_enable"
+              v-model="addForm.regEnable"
               active-color="#13ce66">
             </el-switch>
           </el-form-item>
@@ -32,34 +32,34 @@
           </el-row>
           
 
-          <el-form-item label="邮件服务" prop="email_enable">
+          <el-form-item label="邮件服务" prop="mailerEnable">
             <el-switch
-              v-model="addForm.email_enable"
+              v-model="addForm.mailerEnable"
               active-color="#13ce66">
             </el-switch>
           </el-form-item>
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="邮件服务器" prop="email_server">
-                <el-input v-model="addForm.email_server"></el-input>
+              <el-form-item label="邮件服务器" prop="mailserver">
+                <el-input v-model="addForm.mailserver" :disabled="!addForm.mailerEnable"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="端口" prop="email_port">
-                <el-input v-model="addForm.email_port"></el-input>
+                <el-input v-model="addForm.mailport" :disabled="!addForm.mailerEnable"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="用户名" prop="email_user">
-                <el-input v-model="addForm.email_user"></el-input>
+              <el-form-item label="用户名" prop="mailuser">
+                <el-input v-model="addForm.mailuser" :disabled="!addForm.mailerEnable"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="密码" prop="email_pass">
-                <el-input type="password" v-model="addForm.email_pass"></el-input>
+              <el-form-item label="密码" prop="mailpass">
+                <el-input type="password" v-model="addForm.mailpass" :disabled="!addForm.mailerEnable"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -78,15 +78,15 @@ export default {
     return {
       url: '/api/setting',
       addForm: {
-        comment_enable: true,
-        chk_comment: true,
-        register_enable: true,
+        commentEnable: true,
+        needCheck: true,
+        regEnable: true,
         badword: '',
-        email_enable: true,
-        email_server: '',
-        email_port: '',
-        email_user: '',
-        email_pass: ''
+        mailerEnable: true,
+        mailserver: '',
+        mailport: '',
+        mailuser: '',
+        mailpass: ''
       }
    }
   },
