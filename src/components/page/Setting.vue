@@ -4,7 +4,7 @@
             <strong class="title">系统设置</strong>
         </div>
 
-        <el-form :model="addForm" :rules="rules" ref="addForm" label-width="150px"  @submit.prevent="submit()">
+        <el-form :model="addForm" ref="addForm" label-width="150px"  @submit.prevent="submit()">
           <el-form-item label="允许评论" prop="comment_enable">
             <el-switch
               v-model="addForm.comment_enable"
