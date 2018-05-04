@@ -14,11 +14,10 @@
           <el-form-item label="标题" prop="title">
             <el-input v-model="addForm.title"></el-input>
           </el-form-item>
+
           <el-form-item label="所属分类" prop="cid">
             <el-select v-model="addForm.cid" placeholder="请选择文章分类">
-              <template v-for="item in cates">
-                <el-option :key="item.id" :label="item.title" :value="item.id"></el-option>
-              </template>
+                <el-option v-for="item in cates" :key="item.id" :label="item.title"  :value="item.id" v-html="item.label"></el-option>
             </el-select>
           </el-form-item>
           

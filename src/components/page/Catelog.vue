@@ -17,7 +17,7 @@
         <el-col :span="4">操作</el-col>
       </el-row>
 
-      <el-row :gutter="20" v-for="item in cates" class="bgshow">
+      <el-row :gutter="20" v-for="item in cates" :key="item.id" class="bgshow">
         <el-col :span="12" v-html="item.label"></el-col>
         <el-col :span="4">{{item.sort}}</el-col>
         <el-col :span="4">
@@ -33,8 +33,12 @@
           </el-form-item>
           <el-form-item label="上级分类" prop="pid" >
             <el-select v-model="cateForm.pid" placeholder="请选择上级分类">
-                <el-option v-for="item in cates" :label="item.title"  :value="item.id" v-html="item.label"></el-option>
+                <el-option label="顶级分类" value="0"></el-option>
+                <el-option v-for="item in cates" :key="item.id" :label="item.title"  :value="item.id" v-html="item.label"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="排序" prop="sort">
+            <el-input v-model="cateForm.sort" auto-complete="off" style="width:224px"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -56,7 +60,8 @@
         cateForm: {
           title: '',
           pid: null,
-          label: ''
+          label: '',
+          sort: 0
         },
         cates: [],
         data: [],
@@ -75,7 +80,6 @@
 
     created () {
       this.getCate()
-      this.getCateTree()
     },
 
     methods: {
@@ -83,15 +87,6 @@
         this.$axios.get(this.url
         ).then((res) => {
           this.cates = res.data
-        }).catch((error) => {
-          console.log(error)
-          this.$message.error('请求数据没有响应！')
-        })
-      },
-      getCateTree () {
-        this.$axios.get(this.url + '/getCateTree'
-        ).then((res) => {
-          this.data = res.data
         }).catch((error) => {
           console.log(error)
           this.$message.error('请求数据没有响应！')
@@ -107,7 +102,7 @@
             if (formData.id) {
               msg = '修改成功！'
             }
-            this.$axios.post('/update', formData)
+            this.$axios.post(this.url + '/update', formData)
             .then((res) => {
               if (res.data.result === 'success') {
                 this.loading = false
@@ -115,6 +110,7 @@
                   message: msg,
                   type: 'success'
                 })
+                this.dialogCateVisible = false;
                 this.getCate();
               } else {
                 this.loading = false
@@ -190,6 +186,7 @@
   width: 100%; 
   line-height: 30px;
   color: #606266;
+  font-size: 14px;
 }
 
 .bgshow:hover{

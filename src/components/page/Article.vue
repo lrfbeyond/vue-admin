@@ -9,11 +9,10 @@
       </div>
 
       <div class="query-box">
-          <el-select v-model="selectCate" placeholder="文章分类" class="handle-select" @change="selectCateOpt">
-            <template v-for="item in cates">
-              <el-option :key="item.id" :label="item.title" :value="item.id"></el-option>
-            </template>
+          <el-select v-model="selectCate" placeholder="文章分类" @change="selectCateOpt">
+            <el-option v-for="item in cates" :key="item.id" :label="item.title"  :value="item.id" v-html="item.label"></el-option>
           </el-select>
+
           <el-date-picker
             v-model="selectDate"
             type="date"
