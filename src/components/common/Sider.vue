@@ -24,7 +24,9 @@
           </template>
         </template>
       </el-menu>
+      <div class="copyright" v-show="!menuShow">Powered By Helloweba</div>
     </div>
+
 </template>
 
 <script>
@@ -68,7 +70,7 @@ export default {
           title: '会员'
         },
         {
-          icon: 'icon-msnui-history',
+          icon: 'icon-moban',
           index: '/logs',
           title: '权限',
           subs: [
@@ -138,12 +140,25 @@ export default {
   ul {
     height: 100%;
   }
-
   .el-menu{
     background: #eef1f6;
+    .iconfont{
+      font-size: 18px;
+    }
   }
-}
 
+  
+}
+.copyright{
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  z-index: 1001;
+  height: 28px;
+  line-height: 28px;
+  color: #999;
+  font-size: 12px;
+}
 .iconfont{margin-right: 10px;}
 .el-menu-vertical:not(.el-menu--collapse) {
     width: 200px;

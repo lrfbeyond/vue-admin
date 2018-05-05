@@ -1,10 +1,11 @@
 <template>
     <div class="header">
         <div class="logo">
-          HW后台管理系统<sup>v2.0</sup>
+          HW网站内容管理系统<sup>v2.0</sup>
         </div>
         <div class="user-info">
           <span><i class="iconfont icon-shouye"></i> <a href="http://www.helloweba.net/" target="_blank">网站首页</a></span>
+          <span @click="dialogInfoVisible = true" class="header-info"><i class="iconfont icon-help"></i> 帮助</span>
             <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
                     <i class="iconfont icon-wo"></i> {{username}}
@@ -33,6 +34,32 @@
           </el-form>
           
         </el-dialog>
+
+        <el-dialog title="系统信息" :visible.sync="dialogInfoVisible" width="40%">
+          <el-form label-width="180px" class="sysinfo">
+            <el-form-item label="系统名称">
+              <span>HW网站内容管理系统</span>
+            </el-form-item>
+            <el-form-item label="当前版本">
+              <span>博客版 v2.0</span>
+            </el-form-item>
+            <el-form-item label="最后更新时间">
+              <span>20180504</span>
+            </el-form-item>
+            <el-form-item label="作者">
+              <span>月光光</span>
+            </el-form-item>
+            <el-form-item label="技术支持QQ">
+              <span>13966913</span>
+            </el-form-item>
+            <el-form-item label="Email">
+              <span>lrfbeyond@163.com</span>
+            </el-form-item>
+            <el-form-item label="网站">
+              <span><a href="https://www.helloweba.net" target="_blank">www.helloweba.net</a></span>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -44,6 +71,7 @@ export default {
         loading: false,
         formLabelWidth: '120px',
         dialogEditpassFormVisible: false,
+        dialogInfoVisible: false,
         editpassForm: {
             oldpass: '',
             password: '',
@@ -146,6 +174,10 @@ export default {
       color: #999;
       font-size: 14px;
     }
+    .header-info{
+      margin-left: 10px;
+      cursor: pointer;
+    }
     .user-info {
         float: right;
         padding-right: 50px;
@@ -180,5 +212,8 @@ export default {
     .dialog-footer{
         margin-top: 40px;
         text-align: right;
+    }
+    .sysinfo .el-form-item{
+      margin-bottom: 0
     }
 </style>
