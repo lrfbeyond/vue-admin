@@ -64,6 +64,14 @@ export default new Router({
           component: resolve => require(['@/components/page/MemberEdit'], resolve)
         },
         {
+          path: '/admin',
+          component: resolve => require(['@/components/page/Admin'], resolve)
+        },
+        {
+          path: '/group',
+          component: resolve => require(['@/components/page/Groups'], resolve)
+        },
+        {
           path: '/logs',
           component: resolve => require(['@/components/page/Logs'], resolve)
         },

@@ -42,7 +42,7 @@ a{text-decoration: none}
 .fade-leave-active {
   opacity: 0;
 }
-.el-dialog__header{
+/*.el-dialog__header{
   padding: 0;
   padding-left: 10px;
 }
@@ -51,5 +51,5 @@ a{text-decoration: none}
 }
 .header .el-dialog__header{
         height: 32px; line-height: 52px;
-    }
+    }*/
 </style>
