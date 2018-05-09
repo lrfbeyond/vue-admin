@@ -9,7 +9,7 @@
       </div>
 
       <div class="query-box">
-          <el-button type="primary" plain icon="el-icon-plus" @click="dialogAdminVisible = true">新增</el-button>
+          <el-button type="primary" plain icon="el-icon-plus" @click="dialogRoleVisible = true">新增</el-button>
           &nbsp;
           <el-input placeholder="输入关键字" suffix-icon="el-icon-search" v-model="selectWord" @keyup.enter.native="searchRecord" style="width: 200px; margin-left:10px"></el-input>
       </div>
@@ -19,7 +19,7 @@
         </el-table-column>
         <el-table-column prop="id" label="ID" width="60" sortable>
         </el-table-column>
-        <el-table-column prop="title" label="用户组">
+        <el-table-column prop="title" label="用户组" width="200">
         </el-table-column>
         <el-table-column prop="intro" label="说明">
         </el-table-column>
@@ -47,49 +47,34 @@
         </el-row>
       </div>
 
-      <el-dialog title="新增用户组" :visible.sync="dialogAdminVisible">
+      <el-dialog :title="dialogTitle" :visible.sync="dialogRoleVisible" width="68%">
           <el-form ref="addForm" :model="addForm" :rules="rules" :label-width="formLabelWidth" @submit.prevent="submitForm('addForm')">
-            <el-form-item label="管理员帐号" prop="admin_name">
-              <el-input v-model="addForm.admin_name" auto-complete="off"></el-input>
+            <el-form-item label="用户组名称" prop="title">
+              <el-input v-model="addForm.title" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-input v-model="addForm.password" type="password" auto-complete="off"></el-input>
+            <el-form-item label="说明" prop="intro">
+              <el-input v-model="addForm.intro" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="确认密码" prop="password_confirm">
-              <el-input v-model="addForm.password_confirm" type="password" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="管理员姓名" prop="realname">
-              <el-input v-model="addForm.realname" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="所属用户组" prop="role_id" >
-              <el-select v-model="addForm.role_id" placeholder="请选择用户组">
-                  <el-option v-for="item in roles" :key="item.id" :label="item.title"  :value="item.id"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="password_confirm">
-              <el-input v-model="addForm.password_confirm" type="password" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="管理员姓名" prop="realname">
-              <el-input v-model="addForm.realname" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="所属用户组" prop="role_id" >
-              <el-select v-model="addForm.role_id" placeholder="请选择用户组">
-                  <el-option v-for="item in roles" :key="item.id" :label="item.title"  :value="item.id"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="password_confirm">
-              <el-input v-model="addForm.password_confirm" type="password" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="管理员姓名" prop="realname">
-              <el-input v-model="addForm.realname" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="所属用户组" prop="role_id" >
-              <el-select v-model="addForm.role_id" placeholder="请选择用户组">
-                  <el-option v-for="item in roles" :key="item.id" :label="item.title"  :value="item.id"></el-option>
-              </el-select>
+            <el-form-item label="权限" prop="permission">
+              <el-collapse v-model="activeNames">
+                <template v-for="item in permissions">
+                    <template v-if="item.child">
+                      <el-collapse-item :title="item.title" :name="item.id">
+
+                        <el-checkbox-group v-model="addForm.checked">
+                          <el-checkbox v-for="(c,i) in item.child" :label="c.id" :key="c.id">{{ c.title }}</el-checkbox>
+                        </el-checkbox-group>
+                      
+                      </el-collapse-item>
+                    </template>
+                    <template v-else>
+                      <el-collapse-item :title="item.title" :name="item.id"></el-collapse-item>
+                    </template>
+                  </template>
+              </el-collapse>
             </el-form-item>
             <div class="dialog-footer">
-                <el-button @click="dialogAdminVisible = false">取 消</el-button>
+                <el-button @click="dialogRoleVisible = false">取 消</el-button>
                 <el-button type="primary" native-type="submit" @click.prevent="submitForm('addForm')">{{loading ? '提交中' : '确 定'}}</el-button>
             </div>
           </el-form>
@@ -116,33 +101,44 @@
         total: 0,
         loading: false,
         formLabelWidth: '120px',
-        dialogAdminVisible: false,
+        dialogRoleVisible: false,
+        dialogTitle: '新增用户组',
         addForm: {
-          admin_name: ''
+          id: null,
+          title: '',
+          intro: '',
+          checked: []
         },
+        activeNames: '1',
         rules: {
-          admin_name: [
-            {required: true, message: '请输入管理员帐号名', trigger: 'change'}
-          ],
-          password: [
-            {required: true, message: '请输入新密码', trigger: 'change'}
-          ],
-          password_confirm: [
-            {required: true, message: '请输入确认密码', trigger: 'change'}
-          ],
-          role_id: [
-            {required: true, message: '请选择用户组', trigger: 'change'}
+          title: [
+            {required: true, message: '请输入用户组名称', trigger: 'change'}
           ]
         }
       }
     },
     created () {
       this.reload()
+      this.getPermission()
     },
     computed: {
       //
     },
     methods: {
+      getPermission () {
+        this.$axios.get(this.url + '/getPermission')
+          .then((res) => {
+            if (res.data.result === 'failed') {
+              this.$message.error(res.data.message)
+            } else {
+              this.permissions = res.data.row;
+              //this.checked = res.data.checked;
+            }
+          }).catch((error) => {
+            console.log(error)
+            this.$message.error('请求数据没有响应！')
+          })
+      },
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -160,6 +156,7 @@
                   type: 'success'
                 })
                 this.reload();
+                this.dialogRoleVisible = false;
               } else {
                 this.$message.error(res.data.msg)
               }
@@ -258,7 +255,23 @@
         this.multipleSelection = val
       },
       handleEdit (index, row) {
-        this.$router.push(this.url + '/' + row.id)
+        this.dialogTitle = '编辑用户组';
+        this.dialogRoleVisible = true;
+        if (row.id) {
+          this.$axios.get(this.url + '/' + row.id)
+          .then((res) => {
+            if (res.data.result === 'failed') {
+              this.$message.error(res.data.message)
+            } else {
+              this.addForm = res.data.row;
+            }
+          }).catch((error) => {
+            console.log(error)
+            this.$message.error('请求数据没有响应！')
+          })
+        } else {
+          this.addForm.id = null
+        }
       },
       handleDelete (index, row) {
         const self = this
@@ -302,8 +315,6 @@
 </script>
 
 <style lang="less" scoped>
-
-
 .pagination{
   margin: 20px 0; 
 }
@@ -332,4 +343,12 @@ i.red{
       margin-top: 40px;
       text-align: right;
   }
+
+.el-checkbox{
+  margin-left: 0px;
+  width: 120px;
+}
+.el-collapse-item__header{
+  background-color: #dedede;
+}
 </style>
