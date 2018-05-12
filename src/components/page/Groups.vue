@@ -110,6 +110,7 @@
           checked: []
         },
         activeNames: '1',
+        permissions: '',
         rules: {
           title: [
             {required: true, message: '请输入用户组名称', trigger: 'change'}
@@ -195,7 +196,7 @@
           
         }).catch((error) => {
           console.log(error)
-          this.$message.error('请求数据没有响应！')
+          this.loading = false;
         })
       },
       

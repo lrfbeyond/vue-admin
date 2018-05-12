@@ -120,7 +120,7 @@
           }
         }).catch((error) => {
           console.log(error)
-          this.$message.error('请求数据没有响应！')
+          this.loading = false;
         })
       },
       getCate () {

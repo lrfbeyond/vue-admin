@@ -65,7 +65,7 @@
           </el-row>
 
           <el-form-item style="margin-top:60px">
-            <el-button type="primary" native-type="submit" @click="submit('addForm')">提交</el-button>
+            <el-button type="primary" native-type="submit" @click="submit('addForm')">{{loading ? '提交中' : '提交'}}</el-button>
             <el-button @click="resetForm('addForm')">重置</el-button>
           </el-form-item>
         </el-form>
@@ -77,6 +77,7 @@ export default {
   data () {
     return {
       url: '/api/setting',
+      loading: false,
       addForm: {
         commentEnable: true,
         needCheck: true,
@@ -97,6 +98,7 @@ export default {
     submit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.loading = true
           var formData = this.addForm
           this.$axios.post(this.url + '/setOk', formData)
           .then((res) => {
@@ -107,10 +109,13 @@ export default {
               })
             } else {
               this.$message.error(res.data.msg)
+              this.loading = false
             }
+
           }).catch((err) => {
-            this.$message.error('出错了')
+            //this.$message.error('出错了')
             console.log(err)
+            this.loading = false
           })
         } else {
           console.log('error submit!!')
@@ -124,11 +129,11 @@ export default {
         if (res.status === 200) {
           this.addForm = res.data;
         } else {
-          this.$message.error('出错了')
+          this.$message.error('请求失败')
         }
       }).catch((error) => {
         console.log(error)
-        this.$message.error('请求数据没有响应！')
+        //this.$message.error('请求数据没有响应！')
       })
     }
   }
