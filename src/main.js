@@ -30,33 +30,40 @@ axios.interceptors.request.use(config => {
   return Promise.reject(err)
 })
 
-// axios.interceptors.response.use(response => {
-//   if (response.data.result === 'failed' && response.data.code === -1) {
-//     //this.$message.error('请重新登录！')
-//     router.push('/login')
-//   }
-//   return response
-// }, err => {
-//   return Promise.reject(err)
-// })
+// 拦截
+axios.interceptors.response.use(response => {
+  if (response.data.result === 'failed' && response.data.code === -1) {
+    ElementUI.Message.error('请重新登录！')
+    router.push('/login')
+  }
+  return response
+}, err => {
+  if (err.response.status === 401) {
+    ElementUI.Message.error('您无权限操作此项！');
+    //router.go(-1);
+  } else {
+    ElementUI.Message.error('加载失败！');
+  }
+  return Promise.reject(err)
+})
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     let token = sessionStorage.getItem('token')
-//     if (!token) {
-//       next({
-//         path: 'login',
-//         query: {
-//           redirect: to.fullPath
-//         }
-//       })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let token = sessionStorage.getItem('token')
+    if (!token) {
+      next({
+        path: 'login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
