@@ -47,23 +47,23 @@ axios.interceptors.response.use(response => {
   return Promise.reject(err)
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    let token = sessionStorage.getItem('token')
-    if (!token) {
-      next({
-        path: 'login',
-        query: {
-          redirect: to.fullPath
-        }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     let token = sessionStorage.getItem('token')
+//     if (!token) {
+//       next({
+//         path: 'login',
+//         query: {
+//           redirect: to.fullPath
+//         }
+//       })
+//     } else {
+//       next()
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 /* eslint-disable no-new */
 new Vue({

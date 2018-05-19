@@ -216,4 +216,12 @@ export default {
     .sysinfo .el-form-item{
       margin-bottom: 0
     }
+    .el-dialog{
+      line-height: 32px;
+    }
+    .el-dialog__header{
+        padding: 10px 20px 10px;
+        height: 32px;
+        line-height: 32px;
+    }
 </style>

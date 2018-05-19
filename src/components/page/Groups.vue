@@ -162,7 +162,7 @@
                 this.$message.error(res.data.msg)
               }
             }).catch((err) => {
-              this.$message.error('出错了')
+              //this.$message.error('出错了')
               console.log(err)
             })
           } else {
@@ -233,7 +233,6 @@
             self.multipleSelection = []
           }).catch((error) => {
             console.log(error)
-            this.$message.error('请求数据没有响应！')
           });
         }).catch(() => {
           this.$message({
@@ -297,7 +296,6 @@
             self.multipleSelection = []
           }).catch((error) => {
             console.log(error)
-            this.$message.error('请求数据没有响应！')
           })
         }).catch(() => {
           this.$message({

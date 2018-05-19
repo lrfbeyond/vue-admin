@@ -28,6 +28,7 @@
               :headers="upheaders"
               :show-file-list="false"
               :on-success="uploadSuccess"
+              :on-error="uploadError"
               :before-upload="beforeAvatarUpload">
               <img v-if="picUrl" :src="picUrl" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -95,6 +96,7 @@
 </template>
 
 <script>
+import bus from '../bus';
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 
@@ -179,6 +181,16 @@ export default {
     this.getArticleInfo()
     this.getCate()
     this.getTags()
+    bus.$on('loadInfo', (id) => {
+      if (id === undefined) {
+        this.addForm = {};
+        this.addForm.keywords = [];
+        this.picUrl = '';
+      }
+    });
+  },
+  computed: {
+    //
   },
   methods: {
     submit (formName) {
@@ -203,7 +215,7 @@ export default {
               this.$message.error(res.data.msg)
             }
           }).catch((err) => {
-            this.$message.error('出错了')
+            //this.$message.error('出错了')
             console.log(err)
           })
         } else {
@@ -232,7 +244,7 @@ export default {
       })
     },
     getArticleInfo () {
-      let articleId = this.$route.params.id
+      let articleId = this.$route.params.id;
       if (articleId) {
         this.$axios.get(this.url + '/' + articleId)
         .then((res) => {
@@ -247,7 +259,7 @@ export default {
           this.$message.error('请求数据没有响应！')
         })
       } else {
-        this.addForm.id = null
+        this.addForm.title = null
       }
     },
 
@@ -258,6 +270,9 @@ export default {
       } else {
         this.$message.warning(`上传失败`);
       }
+    },
+    uploadError(err, file) {
+      this.$message.error('您无权限操作此项！');
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/gif';

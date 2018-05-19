@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import bus from '../bus';
+
 export default {
   data () {
     return {
@@ -104,6 +106,10 @@ export default {
       let path = this.$route.path
       let pathArr = path.split('/')
       let routeName = pathArr[1]
+
+      let routeId = this.$route.params.id
+      bus.$emit('loadInfo', routeId);
+
       return '/' + routeName
       // return this.$route.path.replace('/', '')
     }

@@ -42,14 +42,14 @@ a{text-decoration: none}
 .fade-leave-active {
   opacity: 0;
 }
-/*.el-dialog__header{
-  padding: 0;
-  padding-left: 10px;
+
+.el-dialog__header{
+    padding: 10px 20px 10px;
+    height: 32px;
+    line-height: 32px;
 }
-.el-dialog__title{
-  line-height: 20px;
+.el-dialog__body{
+  padding: 20px;
 }
-.header .el-dialog__header{
-        height: 32px; line-height: 52px;
-    }*/
+
 </style>

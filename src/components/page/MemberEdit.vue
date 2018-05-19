@@ -195,7 +195,7 @@ export default {
           this.$axios.post(this.url + '/update', formData)
           .then((res) => {
             console.log(res);
-            if (res.data.result === 'success') {
+            if (res.data.result === 'success' && res.status === 200) {
               this.$message({
                 message: '修改成功！',
                 type: 'success'
@@ -206,7 +206,6 @@ export default {
               this.$message.error(res.data.msg)
             }
           }).catch((err) => {
-            this.$message.error('出错了')
             console.log(err)
           })
         } else {

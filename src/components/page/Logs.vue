@@ -134,7 +134,6 @@
             self.multipleSelection = []
           }).catch((error) => {
             console.log(error)
-            this.$message.error('请求数据没有响应！')
           });
         }).catch(() => {
           this.$message({

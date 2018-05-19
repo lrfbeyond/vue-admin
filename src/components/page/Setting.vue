@@ -96,32 +96,25 @@ export default {
   },
   methods: {
     submit (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          var formData = this.addForm
-          this.$axios.post(this.url + '/setOk', formData)
-          .then((res) => {
-            if (res.data.result === 'success' && res.status === 200) {
-              this.$message({
-                message: '设置成功',
-                type: 'success'
-              })
-            } else {
-              this.$message.error(res.data.msg)
-              this.loading = false
-            }
-
-          }).catch((err) => {
-            //this.$message.error('出错了')
-            console.log(err)
+        this.loading = true
+        var formData = this.addForm
+        this.$axios.post(this.url + '/setOk', formData)
+        .then((res) => {
+          if (res.data.result === 'success' && res.status === 200) {
+            this.$message({
+              message: '设置成功',
+              type: 'success'
+            })
+          } else {
+            this.$message.error(res.data.msg)
             this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+          }
+
+        }).catch((err) => {
+          //this.$message.error('出错了')
+          console.log(err)
+          this.loading = false
+        })
     },
     getSetting () {
       this.$axios.get(this.url)

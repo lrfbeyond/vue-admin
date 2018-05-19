@@ -118,7 +118,6 @@
               }
             }).catch((err) => {
               this.loading = false
-              this.$message.error('出错了')
               console.log(err)
             })
           } else {
@@ -167,7 +166,6 @@
             }
           }).catch((error) => {
             console.log(error)
-            this.$message.error('请求数据没有响应！')
           })
         }).catch(() => {
           this.$message({
