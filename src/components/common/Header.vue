@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="logo">
-          HW网站内容管理系统<sup>v2.0</sup>
+          HW网站内容管理系统<sup>{{version}}</sup>
         </div>
         <div class="user-info">
           <span><i class="iconfont icon-shouye"></i> <a href="http://www.helloweba.net/" target="_blank">网站首页</a></span>
@@ -36,12 +36,12 @@
         </el-dialog>
 
         <el-dialog title="系统信息" :visible.sync="dialogInfoVisible" width="40%">
-          <el-form label-width="180px" class="sysinfo">
+          <el-form label-width="150px" class="sysinfo">
             <el-form-item label="系统名称">
               <span>HW网站内容管理系统</span>
             </el-form-item>
             <el-form-item label="当前版本">
-              <span>博客版 v2.0</span>
+              <span>博客版 {{version}}</span>
             </el-form-item>
             <el-form-item label="最后更新时间">
               <span>20180504</span>
@@ -69,6 +69,7 @@ export default {
   data () {
     return {
         loading: false,
+        version: 'v2.0.2',
         formLabelWidth: '120px',
         dialogEditpassFormVisible: false,
         dialogInfoVisible: false,
@@ -165,7 +166,7 @@ export default {
     }
     .header .logo{
         float: left;
-        width:250px;
+        width:280px;
         padding-left: 60px;
         background: url(../../assets/logo.png) no-repeat 10px 16px;
     }
