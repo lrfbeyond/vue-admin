@@ -9,7 +9,7 @@
       </div>
 
       <div class="query-box">
-          <el-button type="primary" plain icon="el-icon-plus" @click="dialogRoleVisible = true">新增</el-button>
+          <el-button type="primary" plain icon="el-icon-plus" @click="handleEdit(0,0)">新增</el-button>
           &nbsp;
           <el-input placeholder="输入关键字" suffix-icon="el-icon-search" v-model="selectWord" @keyup.enter.native="searchRecord" style="width: 200px; margin-left:10px"></el-input>
       </div>
@@ -255,9 +255,9 @@
         this.multipleSelection = val
       },
       handleEdit (index, row) {
-        this.dialogTitle = '编辑用户组';
         this.dialogRoleVisible = true;
         if (row.id) {
+          this.dialogTitle = '编辑用户组';
           this.$axios.get(this.url + '/' + row.id)
           .then((res) => {
             if (res.data.result === 'failed') {
@@ -270,7 +270,8 @@
             this.$message.error('请求数据没有响应！')
           })
         } else {
-          this.addForm.id = null
+          this.dialogTitle = '新增用户组';
+          this.addForm = {}
         }
       },
       handleDelete (index, row) {

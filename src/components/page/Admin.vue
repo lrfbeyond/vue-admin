@@ -9,7 +9,7 @@
       </div>
 
       <div class="query-box">
-          <el-button type="primary" plain icon="el-icon-plus" @click="dialogAdminVisible = true">新增</el-button>
+          <el-button type="primary" plain icon="el-icon-plus" @click="handleEdit(0,0)">新增</el-button>
           &nbsp; 
           <el-date-picker
             v-model="selectDate"
@@ -269,8 +269,9 @@
       },
       handleEdit (index, row) {
         this.dialogAdminVisible = true;
-        this.dialogTitle = '编辑管理员';
+        
         if (row.id) {
+          this.dialogTitle = '编辑管理员';
           this.$axios.get(this.url + '/' + row.id)
           .then((res) => {
             if (res.data.result === 'failed') {
@@ -286,7 +287,11 @@
             this.$message.error('请求数据没有响应！')
           })
         } else {
-          this.addForm.id = null
+          this.dialogTitle = '新增管理员';
+          this.addForm = {
+            admin_name: ''
+          }
+          this.isAdd = true;
         }
       },
       handleReset (index, row) {
